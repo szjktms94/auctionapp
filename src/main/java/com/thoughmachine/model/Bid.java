@@ -1,29 +1,16 @@
 package main.java.com.thoughmachine.model;
 
-/*timestamp|user_id|action|item|bid_amount
-
-        `timestamp` will be an integer representing a unix epoch time and is the time of the bid,
-        `user_id` is an integer user id
-        `action` will be the string "BID"
-        `item` is a unique string code for that item.
-        `bid_amount` is a decimal representing a bid in the auction site's local currency.*/
+import main.java.com.thoughmachine.exception.InvalidInputException;
 
 public class Bid {
     private Long timestamp;
     private int userId;
-    private final String ACTION = "BID";
     private String itemId;
     private double bidAmount;
 
-    public Bid(Long timestamp, int userId, String itemId, double bidAmount) {
-        this.timestamp = timestamp;
-        this.userId = userId;
-        this.itemId = itemId;
-        this.bidAmount = bidAmount;
-    }
-
     public Bid() {
     }
+
 
     public Long getTimestamp() {
         return timestamp;
@@ -39,10 +26,6 @@ public class Bid {
 
     public void setUserId(int userId) {
         this.userId = userId;
-    }
-
-    public String getACTION() {
-        return ACTION;
     }
 
     public String getItemId() {
@@ -61,7 +44,7 @@ public class Bid {
         this.bidAmount = bidAmount;
     }
 
-    public Bid parseItemFromString(String inputLine) {
+    public Bid parseItemFromString(String inputLine) throws InvalidInputException {
         Bid bid;
         String[] inputArray = inputLine.split("\\|");
 
@@ -72,7 +55,7 @@ public class Bid {
             bid.setItemId(inputArray[3]);
             bid.setBidAmount(Double.parseDouble(inputArray[4]));
         } else {
-            return null;
+            throw new InvalidInputException("Problem occurred during parsing bids");
         }
 
         return bid;

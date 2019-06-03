@@ -1,5 +1,7 @@
 package main.java.com.thoughmachine.model;
 
+import main.java.com.thoughmachine.exception.InvalidInputException;
+
 public class HeartbeatMessage {
     Long timestamp;
 
@@ -18,7 +20,7 @@ public class HeartbeatMessage {
         this.timestamp = timestamp;
     }
 
-    public HeartbeatMessage parseItemFromString(String inputLine) {
+    public HeartbeatMessage parseItemFromString(String inputLine) throws InvalidInputException {
         HeartbeatMessage heartbeatMessage;
         String[] inputArray = inputLine.split("\\|");
 
@@ -26,7 +28,7 @@ public class HeartbeatMessage {
             heartbeatMessage = new HeartbeatMessage();
             heartbeatMessage.setTimestamp(Long.parseLong(inputArray[0]));
         } else {
-            return null;
+            throw new InvalidInputException("Problem occurred  during parsing heartbeat messages");
         }
 
         return heartbeatMessage;

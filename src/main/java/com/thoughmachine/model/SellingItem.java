@@ -1,18 +1,10 @@
 package main.java.com.thoughmachine.model;
 
-/*timestamp|user_id|action|item|reserve_price|close_time
-
-        `timestamp` will be an integer representing a unix epoch time and is the auction start time,
-        `user_id` is an integer user id
-        `action` will be the string "SELL"
-        `item` is a unique string code for that item.
-        `reserve_price` is a decimal representing the item reserve price in the site's local currency.
-        `close_time` will be an integer representing a unix epoch time*/
+import main.java.com.thoughmachine.exception.InvalidInputException;
 
 public class SellingItem {
     private Long timestamp;
     private int userId;
-    private final String ACTION = "SELL";
     private String itemId;
     private double reservePrice;
     private Long closeTime;
@@ -34,10 +26,6 @@ public class SellingItem {
 
     public void setUserId(int userId) {
         this.userId = userId;
-    }
-
-    public String getACTION() {
-        return ACTION;
     }
 
     public String getItemId() {
@@ -64,7 +52,7 @@ public class SellingItem {
         this.closeTime = closeTime;
     }
 
-    public SellingItem parseItemFromString(String inputLine) {
+    public SellingItem parseItemFromString(String inputLine) throws InvalidInputException {
         SellingItem sellingItem;
         String[] inputArray = inputLine.split("\\|");
 
@@ -76,7 +64,7 @@ public class SellingItem {
             sellingItem.setReservePrice(Double.parseDouble(inputArray[4]));
             sellingItem.setCloseTime(Long.parseLong(inputArray[5]));
         } else {
-            return null;
+            throw new InvalidInputException("Problem occurred during parsing selling items");
         }
 
         return sellingItem;
