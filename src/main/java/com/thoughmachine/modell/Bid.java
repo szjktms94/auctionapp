@@ -22,6 +22,9 @@ public class Bid {
         this.bidAmount = bidAmount;
     }
 
+    public Bid() {
+    }
+
     public Long getTimestamp() {
         return timestamp;
     }
@@ -56,5 +59,22 @@ public class Bid {
 
     public void setBidAmount(double bidAmount) {
         this.bidAmount = bidAmount;
+    }
+
+    public Bid parseItemFromStringArray(String inputLine) {
+        Bid bid;
+        String[] inputArray = inputLine.split("\\|");
+
+        if (inputArray.length == 5) {
+            bid = new Bid();
+            bid.setTimestamp(Long.parseLong(inputArray[0]));
+            bid.setUserId(Integer.parseInt(inputArray[1]));
+            bid.setItemId(inputArray[3]);
+            bid.setBidAmount(Double.parseDouble(inputArray[4]));
+        } else {
+            return null;
+        }
+
+        return bid;
     }
 }

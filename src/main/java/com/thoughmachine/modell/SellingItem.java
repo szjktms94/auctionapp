@@ -13,15 +13,9 @@ public class SellingItem {
     private Long timestamp;
     private int userId;
     private final String ACTION = "SELL";
+    private String itemId;
     private double reservePrice;
     private Long closeTime;
-
-    public SellingItem(Long timestamp, int userId, double reservePrice, Long closeTime) {
-        this.timestamp = timestamp;
-        this.userId = userId;
-        this.reservePrice = reservePrice;
-        this.closeTime = closeTime;
-    }
 
     public SellingItem() {
     }
@@ -46,6 +40,14 @@ public class SellingItem {
         return ACTION;
     }
 
+    public String getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
+    }
+
     public double getReservePrice() {
         return reservePrice;
     }
@@ -62,16 +64,17 @@ public class SellingItem {
         this.closeTime = closeTime;
     }
 
-    public static SellingItem parseItemFromStringArray(String inputLine) {
-        SellingItem sellingItem = new SellingItem();
-        String[] inputArray = inputLine.split("|");
+    public SellingItem parseItemFromStringArray(String inputLine) {
+        SellingItem sellingItem;
+        String[] inputArray = inputLine.split("\\|");
 
         if (inputArray.length == 6) {
-            SellingItem sellItem = new SellingItem();
-            sellItem.setTimestamp(Long.parseLong(inputArray[0]));
-            sellItem.setUserId(Integer.parseInt(inputArray[1]));
-            sellItem.setReservePrice(Double.parseDouble(inputArray[3]));
-            sellItem.setCloseTime(Long.parseLong(inputArray[4]));
+            sellingItem = new SellingItem();
+            sellingItem.setTimestamp(Long.parseLong(inputArray[0]));
+            sellingItem.setUserId(Integer.parseInt(inputArray[1]));
+            sellingItem.setItemId(inputArray[3]);
+            sellingItem.setReservePrice(Double.parseDouble(inputArray[4]));
+            sellingItem.setCloseTime(Long.parseLong(inputArray[5]));
         } else {
             return null;
         }

@@ -1,5 +1,7 @@
 package main.java.com.thoughmachine;
 
+import main.java.com.thoughmachine.modell.Bid;
+import main.java.com.thoughmachine.modell.HeartbeatMessage;
 import main.java.com.thoughmachine.modell.SellingItem;
 
 import java.io.BufferedReader;
@@ -19,18 +21,20 @@ public class Main {
         String currentLine;
 
         List<SellingItem> sellingItems = new ArrayList<>();
+        List<Bid> bids = new ArrayList<>();
+        List<HeartbeatMessage> heartbeatMessages = new ArrayList<>();
 
         while ((currentLine = reader.readLine()) != null) {
                 if(currentLine.contains("SELL")) {
-                    SellingItem sellItem = SellingItem.parseItemFromStringArray(currentLine);
+                    SellingItem sellItem = new SellingItem().parseItemFromStringArray(currentLine);
                     sellingItems.add(sellItem);
                 }
                 if(currentLine.contains("BID")) {
-                    sb.append(currentLine);
-                    sb.append("BIIIIDIDDDD");
+                    Bid bid = new Bid();
+                    bids.add(bid.parseItemFromStringArray(currentLine));
                 } else {
-                    sb.append(currentLine);
-                    sb.append("HEARTBEAAAT");
+                    HeartbeatMessage heartbeatMessage = new HeartbeatMessage();
+                    heartbeatMessages.add(heartbeatMessage.parseItemFromStringArray(currentLine));
                 }
             }
         reader.close();
