@@ -12,7 +12,9 @@ package main.java.com.thoughmachine.modell;
 //        `lowest_bid` the lowest bid placed on the item as a number to two decimal places
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AuctionResult {
     private Long closeTime;
@@ -91,12 +93,30 @@ public class AuctionResult {
         this.lowestBid = lowestBid;
     }
 
+    //optimalize to analyze the type of the collection
     public List<AuctionResult> runAuction(List<SellingItem> sellingItems, List<Bid> bids, List<HeartbeatMessage> heartbeatMessages) {
         List<AuctionResult> auctionResults = new ArrayList<>();
-        //TODO calculate who won the auction group by items.
-        //1. get the item from SellingItems filter Bids what has the same itemID, then filter what has the correct time (between the start and the end timestamp)
-        //2.  looking for maximum bidAmount
-        // create auctionResult and add the auctionResultsList
+
+        for (int i = 0; i < sellingItems.size(); i++){
+            int finalI = i;
+            List<Bid> bidsByItem = bids.stream().filter(x -> sellingItems.get(finalI).getItemId().equals(x.getItemId()))
+                .filter(x -> sellingItems.get(0).getTimestamp() <= x.getTimestamp()
+                        && sellingItems.get(0).getCloseTime() >= x.getTimestamp())
+                .collect(Collectors.toList());
+
+            Bid winnerBid = bidsByItem.stream().max(Comparator.comparing(Bid::getBidAmount)).get();
+            double lowestBid = bidsByItem.stream().min(Comparator.comparing(Bid::getBidAmount)).get().getBidAmount();
+
+            AuctionResult auctionResult = new AuctionResult();
+            auctionResult.setCloseTime(sellingItems.get(i).getCloseTime());
+            auctionResult.setItemId(sellingItems.get(i).getItemId());
+            auctionResult.setUserId(winnerBid.getUserId());
+            auctionResult.setPricePaid(winnerBid.getBidAmount()); //second big price
+            auctionResult.setTotalBidCount(bidsByItem.size());
+            auctionResult.setHighestBid(winnerBid.getBidAmount());
+            auctionResult.setLowestBid(lowestBid);
+            auctionResults.add(auctionResult);
+        }
         return auctionResults;
     }
 }

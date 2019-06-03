@@ -42,7 +42,7 @@ public class Main {
 
         //START calculate auction result
         AuctionResult auctionResult = new AuctionResult();
-        //TODO auctionResult.runAuction(params)
+        auctionResult.runAuction(sellingItems,bids,heartbeatMessages);
         //END calculate auction result
 
         //Print the result
