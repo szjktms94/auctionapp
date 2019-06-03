@@ -1,4 +1,4 @@
-package main.java.com.thoughmachine.modell;
+package main.java.com.thoughmachine.model;
 
 /*timestamp|user_id|action|item|reserve_price|close_time
 
@@ -64,7 +64,7 @@ public class SellingItem {
         this.closeTime = closeTime;
     }
 
-    public SellingItem parseItemFromStringArray(String inputLine) {
+    public SellingItem parseItemFromString(String inputLine) {
         SellingItem sellingItem;
         String[] inputArray = inputLine.split("\\|");
 

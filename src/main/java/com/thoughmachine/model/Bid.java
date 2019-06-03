@@ -1,4 +1,4 @@
-package main.java.com.thoughmachine.modell;
+package main.java.com.thoughmachine.model;
 
 /*timestamp|user_id|action|item|bid_amount
 
@@ -61,7 +61,7 @@ public class Bid {
         this.bidAmount = bidAmount;
     }
 
-    public Bid parseItemFromStringArray(String inputLine) {
+    public Bid parseItemFromString(String inputLine) {
         Bid bid;
         String[] inputArray = inputLine.split("\\|");
 

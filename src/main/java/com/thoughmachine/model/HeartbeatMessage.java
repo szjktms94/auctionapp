@@ -1,4 +1,4 @@
-package main.java.com.thoughmachine.modell;
+package main.java.com.thoughmachine.model;
 
 public class HeartbeatMessage {
     Long timestamp;
@@ -18,7 +18,7 @@ public class HeartbeatMessage {
         this.timestamp = timestamp;
     }
 
-    public HeartbeatMessage parseItemFromStringArray(String inputLine) {
+    public HeartbeatMessage parseItemFromString(String inputLine) {
         HeartbeatMessage heartbeatMessage;
         String[] inputArray = inputLine.split("\\|");
 
