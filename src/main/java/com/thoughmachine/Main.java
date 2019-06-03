@@ -1,5 +1,6 @@
 package main.java.com.thoughmachine;
 
+import main.java.com.thoughmachine.modell.AuctionResult;
 import main.java.com.thoughmachine.modell.Bid;
 import main.java.com.thoughmachine.modell.HeartbeatMessage;
 import main.java.com.thoughmachine.modell.SellingItem;
@@ -13,11 +14,10 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) throws IOException {
+        //START parsing string input
         String file ="input.txt";
 
         BufferedReader reader = new BufferedReader(new FileReader(file));
-        StringBuilder sb = new StringBuilder();
-
         String currentLine;
 
         List<SellingItem> sellingItems = new ArrayList<>();
@@ -38,9 +38,14 @@ public class Main {
                 }
             }
         reader.close();
+        // END parsing string input
 
-        System.out.println(sb.toString());
+        //START calculate auction result
+        AuctionResult auctionResult = new AuctionResult();
+        //TODO auctionResult.runAuction(params)
+        //END calculate auction result
 
+        //Print the result
         }
     }
 
